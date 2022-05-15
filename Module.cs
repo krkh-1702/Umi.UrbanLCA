@@ -21,11 +21,20 @@ namespace Umi.UrbanLCA
     {
         private readonly PanelViewModel panelViewModel;
         private readonly Dictionary<Guid, int> selectedBuildingOccupancy;
+        //adding new dict
+        private readonly Dictionary<Guid, int> selectedOpEnergy;
+        private readonly Dictionary<Guid, int> selectedEmEnergy;
+        private readonly Dictionary<Guid, int> selectedTotalEnergy;
 
         public Module()
         {
             panelViewModel = new();
             selectedBuildingOccupancy = new();
+
+            //energy components for Urban LCA
+            selectedOpEnergy = new();
+            selectedEmEnergy = new();
+            selectedTotalEnergy = new();
 
             ModuleControl = new PanelControl { DataContext = panelViewModel };
         }
@@ -34,6 +43,7 @@ namespace Umi.UrbanLCA
 
         protected override Tuple<Bitmap, ImageFormat> TabHeaderIcon => Tuple.Create(Resources.PanelIcon, ImageFormat.Png);
 
+        //Chaneging the name
         protected override string TabHeaderToolTip => "UrbanLCA";
 
         protected override Color? Falsecolor(IUmiBuilding building)
@@ -59,6 +69,13 @@ namespace Umi.UrbanLCA
             foreach (var umiBuilding in UmiContext.Current.Buildings.ForObjects(selectedRhinoObjects))
             {
                 selectedBuildingOccupancy[umiBuilding.Id] = umiBuilding.Occupancy ?? 0;
+
+                 //retrieve UMI results objects from other modules by calling the UmiContext.GetObjects method?
+                 //How do we specify the Energy Simulator Name? 
+                 //Operator '??' cannot be applied to operands of type 'string' and 'int'
+                selectedOpEnergy[umiBuilding.Id] = umiBuilding.EnergySimulatorName ?? 0;
+                selectedEmEnergy[umiBuilding.Id] = umiBuilding.EnergySimulatorName ?? 0;
+                selectedTotalEnergy = selectedOpEnergy + selectedEmEnergy; 
             }
         }
 
@@ -67,6 +84,13 @@ namespace Umi.UrbanLCA
             selectedBuildingOccupancy.Clear();
 
             panelViewModel.TotalSelectedBuildingOccupants = 0;
+
+            //rechanging the values to 0
+            selectedOpEnergy.Clear();
+            selectedEmEnergy.Clear();
+            selectedTotalEnergy.Clear();
+
+            
         }
 
         private void OnSelectionChanged(object sender, RhinoObjectSelectionEventArgs e)
