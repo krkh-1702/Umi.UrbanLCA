@@ -85,7 +85,7 @@ namespace Umi.UrbanLCA.Properties
         {
             get
             {
-                object obj = ResourceManager.GetObject("iconPlaceholder", resourceCulture);
+                object obj = ResourceManager.GetObject("PanelIcon", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

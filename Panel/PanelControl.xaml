@@ -15,17 +15,38 @@
                VerticalAlignment="Center"
                HorizontalAlignment="Center"
                Content="{Binding TotalSelectedBuildingOpEnergy}"
-		       ContentStringFormat="Total selected building operational energy(Year 1): {0},
-			   Total selected building embodied energy(Year 1): {0}" />
+		       ContentStringFormat="Total selected building operational energy(Year 1): {0:F0}" />
+        <Label Grid.Row="1"
+               VerticalAlignment="Center"
+               HorizontalAlignment="Center"
+               Content="{Binding TotalSelectedBuildingEmEnergy}"
+		       ContentStringFormat="Total selected building embodied energy(Year 1): {0:F0}" />
 		<!--  ORIGINAL CONTENT
 		      Content="{Binding TotalSelectedBuildingOccupants}"
-              ContentStringFormat="Total selected building occupants: {0}" />  -->
+              ContentStringFormat="Total selected building occupants: {0}" />  
 		
 		<Button Grid.Row="1"
                 VerticalAlignment="Center"
                 HorizontalAlignment="Center"
                 Content="Visualize Total Energy (Year 1)"
                 Command="{Binding RunExampleCommand}" />
-		
+        -->
     </Grid>
+	
+	<!--Making the year 1 Bar Chart here
+	<Window.DataContext>
+		<local:Emissions/>
+	</Window.DataContext>
+	<StackPanel>
+		<ListBox FontSize ="30"
+				 ItemSource="{Binding emissionList}"
+			<ListBox.ItemTemplate>
+				<DataTemplate>
+					<Rectangle Height="30" Width="{Binding }" Fill="red"/>
+				</DataTemplate>
+			</ListBox.ItemTemplate>
+		</ListBox>
+	</StackPanel>
+    -->
+	
 </UserControl>

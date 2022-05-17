@@ -21,10 +21,11 @@ namespace Umi.UrbanLCA
     {
         private readonly PanelViewModel panelViewModel;
         private readonly Dictionary<Guid, int> selectedBuildingOccupancy;
+
         //adding new dict
-        private readonly Dictionary<Guid, int> selectedOpEnergy;
-        private readonly Dictionary<Guid, int> selectedEmEnergy;
-        private readonly Dictionary<Guid, int> selectedTotalEnergy;
+        private readonly Dictionary<Guid, double> selectedOpEnergy;
+        private readonly Dictionary<Guid, double> selectedEmEnergy;
+        //private readonly Dictionary<Guid, int> selectedTotalEnergy;
 
         public Module()
         {
@@ -34,7 +35,7 @@ namespace Umi.UrbanLCA
             //energy components for Urban LCA
             selectedOpEnergy = new();
             selectedEmEnergy = new();
-            selectedTotalEnergy = new();
+      
 
             ModuleControl = new PanelControl { DataContext = panelViewModel };
         }
@@ -66,16 +67,25 @@ namespace Umi.UrbanLCA
                 return;
             }
 
+            var allResults = UmiContext.Current.GetObjects().ToDictionary(building => Guid.Parse(building.Id));
+
+
             foreach (var umiBuilding in UmiContext.Current.Buildings.ForObjects(selectedRhinoObjects))
             {
-                selectedBuildingOccupancy[umiBuilding.Id] = umiBuilding.Occupancy ?? 0;
 
-                 //retrieve UMI results objects from other modules by calling the UmiContext.GetObjects method?
-                 //How do we specify the Energy Simulator Name? 
-                 //Operator '??' cannot be applied to operands of type 'string' and 'int'
-                selectedOpEnergy[umiBuilding.Id] = umiBuilding.EnergySimulatorName ?? 0;
-                selectedEmEnergy[umiBuilding.Id] = umiBuilding.EnergySimulatorName ?? 0;
-                selectedTotalEnergy = selectedOpEnergy + selectedEmEnergy; 
+                //selectedBuildingOccupancy[umiBuilding.Id] = umiBuilding.Occupancy ?? 0;
+
+                //retrieve UMI results objects from other modules by calling the UmiContext.GetObjects method?
+                //Operator '??' cannot be applied to operands of type 'string' and 'int'
+                //EnergySimulator is for new simulations 
+                //selectedOpEnergy[umiBuilding.Id] = allResults[umiBuilding.Id].Data["SDL/Total Operational Energy"].Data.Sum();
+                //selectedEmEnergy[umiBuilding.Id] = allResults[umiBuilding.Id].Data["SDL/Building Embodied CO2"].Data[1];
+
+                if (allResults.TryGetValue(umiBuilding.Id, out var umiObject))
+                {
+                    selectedOpEnergy[umiBuilding.Id] = umiObject.Data["SDL/Total Operational Energy"].Data.Sum();
+                    selectedEmEnergy[umiBuilding.Id] = umiObject.Data["SDL/Building Embodied CO2"].Data[1];
+                }
             }
         }
 
@@ -83,12 +93,12 @@ namespace Umi.UrbanLCA
         {
             selectedBuildingOccupancy.Clear();
 
-            panelViewModel.TotalSelectedBuildingOccupants = 0;
+            panelViewModel.TotalSelectedBuildingOpEnergy = 0;
 
             //rechanging the values to 0
             selectedOpEnergy.Clear();
             selectedEmEnergy.Clear();
-            selectedTotalEnergy.Clear();
+            
 
             
         }
@@ -104,7 +114,8 @@ namespace Umi.UrbanLCA
                 RemoveBuildingsFromSelection(e.RhinoObjects);
             }
 
-            panelViewModel.TotalSelectedBuildingOccupants = selectedBuildingOccupancy.Values.Sum();
+            panelViewModel.TotalSelectedBuildingOpEnergy = selectedOpEnergy.Values.Sum();
+            panelViewModel.TotalSelectedBuildingEmEnergy = selectedEmEnergy.Values.Sum();
         }
 
         private void RemoveBuildingsFromSelection(IEnumerable<RhinoObject> deselectedRhinoObjects)

@@ -6,32 +6,43 @@ namespace Umi.UrbanLCA.Panel
 {
     public class PanelViewModel : INotifyPropertyChanged
     {
-        private int totalSelectedBuildingOccupants;
+        private double totalSelectedBuildingOpEnergy;
+        private double totalSelectedBuildingEmEnergy;
 
         public PanelViewModel()
         {
-            RunExampleCommand = new RelayCommand(RunExampleRhinoCommand);
+            //RunExampleCommand = new RelayCommand(RunExampleRhinoCommand);
 
             PropertyChanged += (s, e) => { };
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public ICommand RunExampleCommand { get; }
+        //public ICommand RunExampleCommand { get; }
 
-        public int TotalSelectedBuildingOccupants
+        public double TotalSelectedBuildingOpEnergy
         {
-            get => totalSelectedBuildingOccupants;
+            get => totalSelectedBuildingOpEnergy;
             set
             {
-                totalSelectedBuildingOccupants = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(TotalSelectedBuildingOccupants)));
+                totalSelectedBuildingOpEnergy = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(TotalSelectedBuildingOpEnergy)));
             }
         }
 
-        private void RunExampleRhinoCommand()
+        public double TotalSelectedBuildingEmEnergy
         {
-            RhinoApp.RunScript("UmiExampleModuleCommand", echo: true);
+            get => totalSelectedBuildingEmEnergy;
+            set
+            {
+                totalSelectedBuildingEmEnergy = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(TotalSelectedBuildingEmEnergy)));
+            }
         }
+
+        //private void RunExampleRhinoCommand()
+        //{
+        //    RhinoApp.RunScript("UmiExampleModuleCommand", echo: true);
+        //}
     }
 }

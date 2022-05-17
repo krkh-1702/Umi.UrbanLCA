@@ -1,7 +1,7 @@
 
 Tasks:
-1. Install NuGet package for making a bar chart?
-2. How to get to the Designer view for XAML Tsting? 
+1. Install any NuGet package for making a bar chart?
+2. How to get to the Designer view for XAML Tsting? - Error with referencing multiple classes? 
 
 Questions:
 
