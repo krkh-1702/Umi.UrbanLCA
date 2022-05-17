@@ -8,6 +8,7 @@ namespace Umi.UrbanLCA.Panel
     {
         private double totalSelectedBuildingOpEnergy;
         private double totalSelectedBuildingEmEnergy;
+        private double totalSelectedBuildingEnergy;
 
         public PanelViewModel()
         {
@@ -37,6 +38,17 @@ namespace Umi.UrbanLCA.Panel
             {
                 totalSelectedBuildingEmEnergy = value;
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(TotalSelectedBuildingEmEnergy)));
+            }
+        }
+
+        //For total energy
+        public double TotalSelectedBuildingEnergy
+        {
+            get => totalSelectedBuildingEnergy;
+            set
+            {
+                totalSelectedBuildingEnergy = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(TotalSelectedBuildingEnergy)));
             }
         }
 

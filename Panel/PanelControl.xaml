@@ -9,18 +9,27 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition />
+			<RowDefinition Height="*"/>
+			<RowDefinition Height="*"/>
             <RowDefinition />
         </Grid.RowDefinitions>
         <Label Grid.Row="0"
                VerticalAlignment="Center"
                HorizontalAlignment="Center"
                Content="{Binding TotalSelectedBuildingOpEnergy}"
-		       ContentStringFormat="Total selected building operational energy(Year 1): {0:F0}" />
+		       ContentStringFormat="Total selected building operational energy (kWh/m2, Year 1): {0:F0}" />
         <Label Grid.Row="1"
                VerticalAlignment="Center"
                HorizontalAlignment="Center"
                Content="{Binding TotalSelectedBuildingEmEnergy}"
-		       ContentStringFormat="Total selected building embodied energy(Year 1): {0:F0}" />
+		       ContentStringFormat="Total selected building embodied emissions (kgCO2e, Year 1): {0:F0}" />
+		<Label Grid.Row="2"
+               VerticalAlignment="Center"
+               HorizontalAlignment="Center"
+               Content="{Binding TotalSelectedBuildingEnergy}"
+		       ContentStringFormat="Total selected building emissions (kgCO2e, Year 1): {0:F0}" />
+		
+		
 		<!--  ORIGINAL CONTENT
 		      Content="{Binding TotalSelectedBuildingOccupants}"
               ContentStringFormat="Total selected building occupants: {0}" />  

@@ -25,6 +25,8 @@ namespace Umi.UrbanLCA
         //adding new dict
         private readonly Dictionary<Guid, double> selectedOpEnergy;
         private readonly Dictionary<Guid, double> selectedEmEnergy;
+        double selectedTotalEnergy;
+
         //private readonly Dictionary<Guid, int> selectedTotalEnergy;
 
         public Module()
@@ -85,6 +87,10 @@ namespace Umi.UrbanLCA
                 {
                     selectedOpEnergy[umiBuilding.Id] = umiObject.Data["SDL/Total Operational Energy"].Data.Sum();
                     selectedEmEnergy[umiBuilding.Id] = umiObject.Data["SDL/Building Embodied CO2"].Data[1];
+
+                    //adding them together for the total emissions value
+                    //selectedTotalEnergy = selectedOpEnergy[umiBuilding.Id] + selectedEmEnergy[umiBuilding.Id];
+
                 }
             }
         }
@@ -94,13 +100,11 @@ namespace Umi.UrbanLCA
             selectedBuildingOccupancy.Clear();
 
             panelViewModel.TotalSelectedBuildingOpEnergy = 0;
+            panelViewModel.TotalSelectedBuildingEmEnergy = 0;
 
             //rechanging the values to 0
             selectedOpEnergy.Clear();
             selectedEmEnergy.Clear();
-            
-
-            
         }
 
         private void OnSelectionChanged(object sender, RhinoObjectSelectionEventArgs e)
@@ -116,6 +120,7 @@ namespace Umi.UrbanLCA
 
             panelViewModel.TotalSelectedBuildingOpEnergy = selectedOpEnergy.Values.Sum();
             panelViewModel.TotalSelectedBuildingEmEnergy = selectedEmEnergy.Values.Sum();
+            panelViewModel.TotalSelectedBuildingEnergy = ((selectedOpEnergy.Values.Sum())* 0.233) + selectedEmEnergy.Values.Sum();
         }
 
         private void RemoveBuildingsFromSelection(IEnumerable<RhinoObject> deselectedRhinoObjects)
