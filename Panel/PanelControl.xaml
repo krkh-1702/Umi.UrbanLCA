@@ -40,7 +40,12 @@
                 Content="Visualize Total Energy (Year 1)"
                 Command="{Binding RunExampleCommand}" />
         -->
+		<Button Grid.Row="3" x:Name="Visualization" Height="30" Width="150" 
+				Canvas.Left="10" Canvas.Top="100"
+   Content="Visualize Year 1 Results" >  
+</Button> 
     </Grid>
+
 	
 	<!--Making the year 1 Bar Chart here
 	<Window.DataContext>

@@ -51,10 +51,5 @@ namespace Umi.UrbanLCA.Panel
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(TotalSelectedBuildingEnergy)));
             }
         }
-
-        //private void RunExampleRhinoCommand()
-        //{
-        //    RhinoApp.RunScript("UmiExampleModuleCommand", echo: true);
-        //}
     }
 }
