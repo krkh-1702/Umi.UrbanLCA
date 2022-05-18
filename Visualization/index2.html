@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>UrbanLCA Viz_2</title>
+    <script src="https://cdn.anychart.com/releases/8.7.1/js/anychart-base.min.js"></script>
+
+    <!--Link to custom CSS-->
+    <link rel="stylesheet" href="index.css" />
+  </head>
+  <body>
+    <br />
+    <br />
+
+    <p class="small-text">MIT 4.433 | Spring 2022</p>
+    <p class="small-text-2">Independent Project | WIP | Kritika Kharbanda</p>
+    <h1 class="large-text">UrbanLCA Visualization</h1>
+    <br />
+    <br />
+    <p class="medium-text">(Stacked Bar Chart)</p>
+    <br />
+    <br />
+    <br />
+    <div id="container">
+      <script>
+        anychart.onDocumentReady(function () {
+          // create data set on our data
+          var dataSet = anychart.data.set([["Emissions", 42580, 230427]]);
+
+          // map data for the first series, take x from the zero column and value from the first column of data set
+          var seriesData_1 = dataSet.mapAs({ x: 0, value: 1 });
+
+          // map data for the second series, take x from the zero column and value from the second column of data set
+          var seriesData_2 = dataSet.mapAs({ x: 0, value: 2 });
+
+          // create bar chart
+          var chart = anychart.bar();
+
+          // turn on chart animation
+          chart.animation(true);
+
+          // set container id for the chart
+          chart.container("container");
+          chart.padding([10, 40, 5, 20]);
+
+          // set scale minimum
+          chart.yScale().minimum(0);
+
+          // force chart to stack values by Y scale.
+          chart.yScale().stackMode("value");
+
+          chart
+            .yAxis()
+            .labels()
+            .format(function () {
+              return this.value.toLocaleString();
+            });
+
+          // set titles for axises
+          chart.xAxis().title("Type");
+          chart.yAxis().title("Emission Value (kgCO2/m2)");
+
+          // helper function to setup label settings for all series
+          var setupSeriesLabels = function (series, name) {
+            series.name(name);
+            series.tooltip().valuePrefix("kgCO2/m2: ");
+            series.stroke("3 #fff 1");
+            series.hovered().stroke("3 #fff 1");
+          };
+
+          // temp variable to store series instance
+          var series;
+
+          // create first series with mapped data
+          series = chart.bar(seriesData_1);
+          setupSeriesLabels(series, "Operational Emissions");
+
+          // create second series with mapped data
+          series = chart.bar(seriesData_2);
+          setupSeriesLabels(series, "Embodied Emissions");
+
+          // turn on legend
+          chart.legend().enabled(true).fontSize(13).padding([0, 0, 20, 0]);
+          chart.interactivity().hoverMode("by-x");
+          chart.tooltip().displayMode("union");
+          // initiate chart drawing
+          chart.draw();
+        });
+      </script>
+    </div>
+    <br />
+    <p class="medium-text">Total Emissions for year 1 = 273,007 kgCO2/m2</p>
+  </body>
+</html>

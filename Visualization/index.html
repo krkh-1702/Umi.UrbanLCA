@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>UrbanLCA Viz_1</title>
+    <script src="https://cdn.anychart.com/releases/8.7.1/js/anychart-base.min.js"></script>
+
+    <!--Link to custom CSS-->
+    <link rel="stylesheet" href="index.css" />
+  </head>
+  <body>
+    <br />
+    <br />
+
+    <p class="small-text">MIT 4.433 | Spring 2022</p>
+    <p class="small-text-2">Independent Project | WIP | Kritika Kharbanda</p>
+    <h1 class="large-text">UrbanLCA Visualization</h1>
+    <br />
+    <br />
+    <p class="medium-text">(Simple Bar Chart)</p>
+    <br />
+    <br />
+    <br />
+
+    <div id="container">
+      <script>
+        anychart.onDocumentReady(function () {
+          // create the data
+          // var data = {
+          //   header: ["Emission Type", "Emission Value"],
+          //   rows: [
+          //     ["Operational Emissions", 42580],
+          //     ["Embodied Emissions", 230427],
+          //   ],
+          // };
+
+          // // // create the column chart
+          // // var chart = anychart.column();
+
+          // // // add the data
+          // // chart.data(data);
+
+          // // create a column series and set the data
+          // var series = chart.column(data);
+
+          // create data
+          var data = [
+            ["Operational Emissions", 42580],
+            ["Embodied Emissions", 230427],
+          ];
+
+          // create a chart
+          chart = anychart.column();
+
+          // create a column series and set the data
+          var series = chart.column(data);
+
+          //Adding margins
+          var margin = chart.margin();
+
+          // Set bottom space.
+          // margin.bottom(130);
+          // margin.top(200);
+          margin.left(200);
+          margin.right(200);
+
+          // set the chart title
+          // chart.title("Total Emissions for Year 1");
+
+          // create error bars
+          series.error("25%");
+
+          // set the container
+          chart.container("container");
+
+          // draw the chart
+          chart.draw();
+
+          //Altering the appearance of chart 1
+          // configure the visual settings of the first series
+          chart.normal().fill("#00cc99", 0.3);
+          chart.hovered().fill("#00cc99", 0.1);
+          chart.selected().fill("#00cc99", 0.5);
+          chart.normal().stroke("#00cc99", 1, "10 5", "round");
+          chart.hovered().stroke("#00cc99", 2, "10 5", "round");
+          chart.selected().stroke("#00cc99", 4, "10 5", "round");
+
+          // set the padding between column groups
+          chart.barGroupsPadding(5);
+
+          // set the padding between columns
+          chart.barsPadding(-3);
+
+          chart
+            .yScale() // adjust y scale
+            .minimum(0) // set minimum value
+            .maximum(231500);
+        });
+      </script>
+    </div>
+    <br />
+    <p class="medium-text">Total Emissions for year 1 = 273,007 kgCO2/m2</p>
+  </body>
+</html>
