@@ -1,12 +1,6 @@
+This is a WIP project by Kritika Kharbanda for the course MIT 4.433, Spring 2022, instructed by Prof. Christoph Reinhart. 
 
-Tasks:
-1. Install any NuGet package for making a bar chart?
-2. How to get to the Designer view for XAML Tsting? - Error with referencing multiple classes? 
-
-Questions:
-
-1. Module.cs:
-EnergySimulatorName? How do we specify what energy is it?
-2. Specifying the already run results from before?
-3. Changing the icon?
-4. Already getting errors while trying to load the plugin
+Status:
+1. Working Year 1 values for operational, embodied and total emissions.
+2. Added button for JSON file exchange to the web.
+3. Visualization on web currently. 
